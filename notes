@@ -3,7 +3,7 @@
 set -e
 
 # Version number
-VERSION="1.0.0"
+VERSION="1.1.0"
 
 # Name of file currently run
 FILE="${0##*/}"
@@ -18,11 +18,12 @@ It's main purpose is to compile singular or multiple markdown files to pdf
 This allows for quick note taking and in future note reading 
 
 Usage:
-    ${FILE%.*}  [-y <year>] [-d <directory>] [-l] [-p <pdf name>]
+    ${FILE%.*}  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-p <pdf name>]
     ${FILE%.*}  -h | -v | -l 
 
 Options:
     -y enter year of course in NOTES_DIR e.g. -y 3 
+    -s enter semester of course, may only be 1 or 2 if out of range, flag ignored 
     -d use directory within NOTES_DIR or absoulte directory to compile pdf
     -p name of pdf (without extension .pdf) 
     -h print helptext
@@ -62,13 +63,13 @@ getnotes() {
 # returns void
 main() {
     [[ -z "$1" ]] && echo -e "Command not found\nTry '${FILE%.*} -h' for more information."    
-    [[ $1 == "-l" ]] && cd $NOTES_DIR && ls --color && exit 0 
-    while getopts y:d:p:lhv flag
+    while getopts y:d:p:s:lhv flag
     do
         case "${flag}" in
             y) y=${OPTARG};;
             d) d=${OPTARG};;
             p) p=${OPTARG};;
+            s) s=${OPTARG};;
             l) l="list";;
             h) usage ; exit 0;;
             v) version ; exit 0;;
@@ -76,8 +77,10 @@ main() {
     done
     cd $NOTES_DIR
     [[ $y != "" ]] && cd Year$y 
-    [[ $d != "" ]] && cd $d && [[ $p != "" ]] && makepdf $p
-    [[ $l == "list" ]] && ls --color && exit 0
+    [[ $s == "1" ]] || [[ $s == "2" ]] && cd Sem$s
+    [[ $d != "" ]] && cd $d 
+    [[ $l == "list" ]] && ls --color
+    [[ $d != "" ]] && [[ $p != "" ]] && makepdf $p
     unset y d p l
 }
 
