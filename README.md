@@ -21,7 +21,7 @@ Options:
     
 Note:
     Make sure to change the NOTES_DIR variable to suit your directory
-    All markdown files will be sorted based on `> Date dd-mm-yy` which 
+    All markdown files will be sorted based on "> Date dd-mm-yyyy" which 
     are expected to be somewhere in the file that will be later compiled to LaTeX
 ```
 
