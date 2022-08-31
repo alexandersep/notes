@@ -30,6 +30,7 @@ Note:
 * LaTeX
 
 ### Inspiration
+* I decided to yet again give an attempt to incorporate vim into my note taking workflow
 * I was inspired to create a pandoc script based on this youtube 
 [video](https://www.youtube.com/watch?v=wh_WGWii7UE&t=853s) 
 * This github repository very loosely referenced this github 
