@@ -30,6 +30,6 @@ Note:
 
 ### Inspiration
 * I was inspired to create a pandoc script based on this youtube 
-[video](`https://www.youtube.com/watch?v=wh_WGWii7UE&t=853s`) 
+[video](https://www.youtube.com/watch?v=wh_WGWii7UE&t=853s) 
 * This github repository very loosely referenced this github 
 [repo](https://github.com/connermcd/notes/blob/master/notes) 
