@@ -3,7 +3,7 @@
 set -e
 
 # Version number
-VERSION="1.1.0"
+VERSION="1.1.1"
 
 # Name of file currently run
 FILE="${0##*/}"
@@ -51,7 +51,7 @@ makepdf() {
 }
 
 # returns a String files, separated with spaces
-# Ordered with "> Date: " found inside the files
+# Ordered with "> Date: dd-mm-yyyy" found inside the files
 getnotes() {
     for file in *.md; do
         echo "`grep "> Date: [0-3][0-9]-[0-1][0-9]-[0-9][0-9][0-9][0-9]" $file` $file"
@@ -81,7 +81,7 @@ main() {
     [[ $d != "" ]] && cd $d 
     [[ $l == "list" ]] && ls --color
     [[ $d != "" ]] && [[ $p != "" ]] && makepdf $p
-    unset y d p l
+    unset y d p s l
 }
 
 # envokes main
