@@ -18,6 +18,7 @@ Options:
     -h print helptext
     -v print version 
     -l list current directory 
+    
 Note:
     Make sure to change the NOTES_DIR variable to suit your directory
     All markdown files will be sorted based on `> Date dd-mm-yy` which 
