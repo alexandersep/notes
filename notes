@@ -1,0 +1,86 @@
+#!/bin/bash
+
+set -e
+
+# Version number
+VERSION="1.0.0"
+
+# Name of file currently run
+FILE="${0##*/}"
+
+NOTES_DIR="/home/sasha/Documents/Notes/"
+
+# returns String with helptext 
+usage() {
+cat << EOF
+Markdown to LaTeX pdf script convertor using pandoc
+It's main purpose is to compile singular or multiple markdown files to pdf
+This allows for quick note taking and in future note reading 
+
+Usage:
+    ${FILE%.*}  [-y <year>] [-d <directory>] [-l] [-p <pdf name>]
+    ${FILE%.*}  -h | -v | -l 
+
+Options:
+    -y enter year of course in NOTES_DIR e.g. -y 3 
+    -d use directory within NOTES_DIR or absoulte directory to compile pdf
+    -p name of pdf (without extension .pdf) 
+    -h print helptext
+    -v print version 
+    -l list current directory 
+Notes:
+    Make sure to change the NOTES_DIR variable to suit your directory
+    All markdown files will be sorted based on `> Date dd-mm-yy` which 
+    are expected to be somewhere in the file that will be later compiled to LaTeX
+
+EOF
+}
+
+# returns String with version information
+version() {
+cat << EOF
+${FILE%.*} $VERSION
+
+Written by Alexander Sepelenco
+EOF
+}
+
+# returns void, compiles files to LaTeX specified in the String getnotes 
+makepdf() {
+    pandoc -s -f markdown -t latex --toc $(getnotes) -o $1.pdf
+}
+
+# returns a String files, separated with spaces
+# Ordered with "> Date: " found inside the files
+getnotes() {
+    for file in *.md; do
+        echo "`grep "> Date: [0-3][0-9]-[0-1][0-9]-[0-9][0-9][0-9][0-9]" $file` $file"
+    done | \
+    sort -n -t "-" -k3 -k2 -k1 | \
+    awk '{print $5}' 
+}
+
+# returns void
+main() {
+    [[ -z "$1" ]] && echo -e "Command not found\nTry '${FILE%.*} -h' for more information."    
+    [[ $1 == "-l" ]] && cd $NOTES_DIR && ls --color && exit 0 
+    while getopts y:d:p:lhv flag
+    do
+        case "${flag}" in
+            y) y=${OPTARG};;
+            d) d=${OPTARG};;
+            p) p=${OPTARG};;
+            l) l="list";;
+            h) usage ; exit 0;;
+            v) version ; exit 0;;
+        esac
+    done
+    cd $NOTES_DIR
+    [[ $y != "" ]] && cd Year$y 
+    [[ $d != "" ]] && cd $d && [[ $p != "" ]] && makepdf $p
+    [[ $l == "list" ]] && ls --color && exit 0
+    unset y d p l
+}
+
+# envokes main
+main "$@" # equivalent to main $1 $2 ...
