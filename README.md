@@ -1,6 +1,6 @@
 # notes
-Markdown to LaTeX pdf script convertor using pandoc
-It's main purpose is to compile singular or multiple markdown files to pdf
+Markdown to LaTeX pdf script convertor using pandoc \
+It's main purpose is to compile singular or multiple markdown files to pdf \
 This allows for quick note taking and in future note reading 
 
 ## Usage
