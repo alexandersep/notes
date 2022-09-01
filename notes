@@ -31,6 +31,7 @@ Examples:
     ${FILE%.*} -y 3 -s 1 -l 
 EOF
 }
+
 # returns String with helptext 
 usage() {
 cat << EOF
