@@ -4,8 +4,8 @@ It's main purpose is to compile singular or multiple markdown files to pdf \
 This allows for quick note taking and in future note reading 
 
 ## Usage
-Give yourself executing permission via `chmod +x notes` \
-Consider installing this script into `/usr/local/bin`
+1. Give yourself executing permission via `chmod +x notes` \
+2. Consider installing this script into `/usr/local/bin`
 ```
 Usage:
     notes [-y <year>] [-d <directory>] [-l] [-p <pdf name>]
