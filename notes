@@ -8,6 +8,7 @@ VERSION="2.1.0"
 # Name of file currently run
 FILE="${0##*/}"
 
+# Change this to your wanted directory
 NOTES_DIR="/home/sasha/Documents/Notes/"
 
 # returns String with examples on how to use programme
@@ -57,7 +58,7 @@ Options:
 Notes:
     Make sure to change the NOTES_DIR variable to suit your directory
     All markdown files will be sorted based on "> Date dd-mm-yyyy" which 
-    are expected to be somewhere in the file that will be later compiled to LaTeX
+    are expected to be somewhere in the file. This will be later used to compile to LaTeX
 EOF
 }
 
