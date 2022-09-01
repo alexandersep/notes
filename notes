@@ -3,7 +3,7 @@
 set -e
 
 # Version number
-VERSION="2.1.0"
+VERSION="2.1.1"
 
 # Name of file currently run
 FILE="${0##*/}"
@@ -143,7 +143,7 @@ main() {
          makepdf $p
          [[ $o == "open" ]] && zathura $p.pdf &
     fi
-    unset y d p s l o e
+    unset y d p s l o
 }
 
 # envokes main
