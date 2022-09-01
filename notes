@@ -75,7 +75,7 @@ makepdf() {
 }
 
 # returns a String files, separated with spaces
-# Ordered with "> Date: " found inside the files
+# Ordered with "> Date: dd-mm-yyyy" found inside the files
 getnotes() {
     for file in *.md; do
         echo "`grep "> Date: [0-3][0-9]-[0-1][0-9]-[0-9][0-9][0-9][0-9]" $file` $file"
