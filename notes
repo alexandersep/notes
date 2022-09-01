@@ -3,13 +3,34 @@
 set -e
 
 # Version number
-VERSION="1.1.0"
+VERSION="2.1.0"
 
 # Name of file currently run
 FILE="${0##*/}"
 
 NOTES_DIR="/home/sasha/Documents/Notes/"
 
+# returns String with examples on how to use programme
+examples() {
+cat << EOF
+Examples:
+    # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and lists directory 
+    ${FILE%.*} -y 3 -s 1 -d CompArch2 -l 
+
+    # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and makes pdf called lecture 7 
+    ${FILE%.*} -y 3 -s 1 -d CompArch2 -p lecture7 
+
+    # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and makes pdf called lecture 7 and opens it
+    ${FILE%.*} -y 3 -s 1 -d CompArch2 -p lecture7 -o
+
+    # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2, lists directory and makes pdf called lecture 7 
+    # Note, listing directory takes precedence over making pdf in all cases whether the -l flag comes after
+    ${FILE%.*} -y 3 -s 1 -d CompArch2 -l -p lecture7 
+
+    # This does goes to \$NOTES_DIR/Year3/Sem1 and lists directory
+    ${FILE%.*} -y 3 -s 1 -l 
+EOF
+}
 # returns String with helptext 
 usage() {
 cat << EOF
@@ -18,20 +39,23 @@ It's main purpose is to compile singular or multiple markdown files to pdf
 This allows for quick note taking and in future note reading 
 
 Usage:
-    ${FILE%.*}  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-p <pdf name>]
-    ${FILE%.*}  -h | -v | -l 
+    ${FILE%.*}  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-p <pdf name> &| -o]
+    ${FILE%.*}  -h | -v | -l | -e
 
 Options:
     -y enter year of course in NOTES_DIR e.g. -y 3 
     -s enter semester of course, may only be 1 or 2 if out of range, flag ignored 
     -d use directory within NOTES_DIR or absoulte directory to compile pdf
     -p name of pdf (without extension .pdf) 
+    -o open newely created pdf
     -h print helptext
     -v print version 
     -l list current directory 
+    -e output examples on how to run programme 
+
 Notes:
     Make sure to change the NOTES_DIR variable to suit your directory
-    All markdown files will be sorted based on `> Date dd-mm-yy` which 
+    All markdown files will be sorted based on "> Date dd-mm-yyyy" which 
     are expected to be somewhere in the file that will be later compiled to LaTeX
 EOF
 }
@@ -60,28 +84,64 @@ getnotes() {
     awk '{print $5}' 
 }
 
+# Param $1 - String
+# Return boolean 
+isDirectory() {
+    [[ -d "$1" ]] && echo 1 || echo 0
+}
+
+# Parm $1 - num :: String 
+# Enter Document
+# Return boolean 
+isNum() {
+    regNum="^[0-9]+$" # regular expression Number
+    [[ $1 =~ $regNum ]] && echo 1 || echo 0
+    unset regNum
+}
+
+# Param $1 - directory:: String 
+# Return void
+enterDirectory() {
+    [[ $(isDirectory "$1") == 1 ]] && cd $2$1 || echo "Error, directory $1 does not exist"
+}
+
 # returns void
 main() {
     [[ -z "$1" ]] && echo -e "Command not found\nTry '${FILE%.*} -h' for more information."    
-    while getopts y:d:p:s:lhv flag
+    while getopts y:d:s:p:olhve flag
     do
         case "${flag}" in
             y) y=${OPTARG};;
             d) d=${OPTARG};;
-            p) p=${OPTARG};;
             s) s=${OPTARG};;
+            p) p=${OPTARG};;
+            o) o="open";;
             l) l="list";;
             h) usage ; exit 0;;
             v) version ; exit 0;;
+            e) examples ; exit 0;;
         esac
     done
     cd $NOTES_DIR
-    [[ $y != "" ]] && cd Year$y 
-    [[ $s == "1" ]] || [[ $s == "2" ]] && cd Sem$s
-    [[ $d != "" ]] && cd $d 
+    if [[ $(isNum "$y") == 1 ]]; then 
+        enterDirectory "Year$y"
+    elif [[ $y != "" ]]; then
+        echo "Error the $y flag must be specified as a number"
+    fi
+    if [[ $(isNum "$s") == 1 ]]; then
+        enterDirectory "Sem$s"
+    elif [[ $s != "" ]]; then 
+        echo "Error the $s flag must be specified as a number"
+    fi 
+    if [[ $d != "" ]]; then
+        enterDirectory "$d"
+    fi
     [[ $l == "list" ]] && ls --color
-    [[ $d != "" ]] && [[ $p != "" ]] && makepdf $p
-    unset y d p l
+    if [[ $p != "" ]]; then
+         makepdf $p
+         [[ $o == "open" ]] && zathura $p.pdf &
+    fi
+    unset y d p s l o e
 }
 
 # envokes main
