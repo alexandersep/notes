@@ -16,8 +16,8 @@ Usage:
     notes  -h | -v | -l | -e
 
 Options:
-    -y enter year of course in NOTES_DIR e.g. -y 3
-    -s enter semester of course, may only be 1 or 2 if out of range, flag ignored
+    -y enter year of course in NOTES_DIR
+    -s enter semester of course
     -d use directory within NOTES_DIR or absoulte directory to compile pdf
     -p name of pdf (without extension .pdf)
     -o open newely created pdf
