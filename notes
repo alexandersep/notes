@@ -3,7 +3,7 @@
 set -e
 
 # Version number
-VERSION="2.1.2"
+VERSION="2.2.2"
 
 # Name of file currently run
 FILE="${0##*/}"
@@ -19,17 +19,20 @@ Examples:
     ${FILE%.*} -y 3 -s 1 -d CompArch2 -l 
 
     # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and makes pdf called lecture 7 
-    ${FILE%.*} -y 3 -s 1 -d CompArch2 -p lecture7 
+    ${FILE%.*} -y 3 -s 1 -d CompArch2 -p lecture7  
 
     # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and makes pdf called lecture 7 and opens it
     ${FILE%.*} -y 3 -s 1 -d CompArch2 -p lecture7 -o
 
-    # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2, lists directory and makes pdf called lecture 7 
+    # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2, lists directory and makes pdf called lecture 7 and opens it
     # Note, listing directory takes precedence over making pdf in all cases whether the -l flag comes after
-    ${FILE%.*} -y 3 -s 1 -d CompArch2 -l -p lecture7 
+    ${FILE%.*} -y 3 -s 1 -d CompArch2 -l -p lecture7 -O lecture7
 
     # This does goes to \$NOTES_DIR/Year3/Sem1 and lists directory
     ${FILE%.*} -y 3 -s 1 -l 
+
+    # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and opens a samples.pdf file that is assumed to exist
+    ${FILE%.*} -y 3 -s 1 -d CompArch2 -O samples
 EOF
 }
 
@@ -41,7 +44,7 @@ It's main purpose is to compile singular or multiple markdown files to pdf
 This allows for quick note taking and in future note reading 
 
 Usage:
-    ${FILE%.*}  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-p <pdf name> &| -o]
+    ${FILE%.*}  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-p <pdf name> &| -o] [-O <pdf name>]
     ${FILE%.*}  -h | -v | -l | -e
 
 Options:
@@ -50,6 +53,7 @@ Options:
     -d use directory within NOTES_DIR or absoulte directory to compile pdf
     -p name of pdf (without extension .pdf) 
     -o open newely created pdf
+    -O open pdf
     -h print helptext
     -v print version 
     -l list current directory 
@@ -110,13 +114,14 @@ enterDirectory() {
 # returns void
 main() {
     [[ -z "$1" ]] && echo -e "Command not found\nTry '${FILE%.*} -h' for more information."    
-    while getopts y:d:s:p:olhve flag
+    while getopts y:d:s:p:O:olhve flag
     do
         case "${flag}" in
             y) y=${OPTARG};;
             d) d=${OPTARG};;
             s) s=${OPTARG};;
             p) p=${OPTARG};;
+            O) O=${OPTARG};;
             o) o="open";;
             l) l="list";;
             h) usage ; exit 0;;
@@ -135,14 +140,13 @@ main() {
     elif [[ $s != "" ]]; then 
         echo "Error the $s flag must be specified as a number"
     fi 
-    if [[ $d != "" ]]; then
-        enterDirectory "$d"
-    fi
+    [[ $d != "" ]] && enterDirectory "$d"
     [[ $l == "list" ]] && ls --color
     if [[ $p != "" ]]; then
          makepdf $p
-         [[ $o == "open" ]] && zathura $p.pdf &
+        [[ $o == "open" ]] && zathura $p.pdf &
     fi
+    [[ $O != "" ]] && zathura $O.pdf &
     unset y d p s l o
 }
 
