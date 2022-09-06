@@ -8,11 +8,7 @@ This allows for quick note taking and in future note reading
 2. Consider installing this script into `/usr/local/bin`
 ```
 Usage:
-    notes [-y <year>] [-d <directory>] [-l] [-p <pdf name>]
-    notes -h | -v | -l 
-
-Usage:
-    notes  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-p <pdf name> &| -o]
+    notes  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-p <pdf name> &| -o] [-O <pdf name>]
     notes  -h | -v | -l | -e
 
 Options:
