@@ -130,8 +130,16 @@ main() {
         esac
     done
     cd $NOTES_DIR
-    [[ $(isNum "$y") == 1 ]] && enterDirectory "Year$y" || echo "Error the $y flag must be specified as a number"
-    [[ $(isNum "$s") == 1 ]] && enterDirectory "Sem$s" || echo "Error the $s flag must be specified as a number"
+    if [[ $(isNum "$y") == 1 ]]; then 
+        enterDirectory "Year$y" 
+    elif [[ $y != "" ]]; then
+        echo "Error the $y flag must be specified as a number"
+    fi
+    if [[ $(isNum "$s") == 1 ]]; then 
+        enterDirectory "Sem$s" 
+    elif [[ $s != "" ]]; then 
+        echo "Error the $s flag must be specified as a number"
+    fi
     [[ $d != "" ]] && enterDirectory "$d"
     [[ $l == "list" ]] && ls --color
     [[ $p != "" ]] && makepdf $p ; [[ $o == "open" ]] && zathura $p.pdf &
