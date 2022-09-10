@@ -3,10 +3,16 @@
 set -e
 
 # Version number
-VERSION="2.2.4"
+VERSION="2.2.5"
 
-# Name of file currently run
-FILE="${0##*/}"
+# Name of file currently run with extension
+EXFILE="${0##*/}"
+
+# Name of file without extension
+FILE="${EXFILE%.*}"
+
+# Name of pdf viewer
+EDITOR="zathura"
 
 # Change this to your wanted directory
 NOTES_DIR="/home/sasha/Documents/Notes/"
@@ -16,23 +22,23 @@ examples() {
 cat << EOF
 Examples:
     # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and lists directory 
-    ${FILE%.*} -y 3 -s 1 -d CompArch2 -l 
+    $FILE -y 3 -s 1 -d CompArch2 -l 
 
     # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and makes pdf called lecture 7 
-    ${FILE%.*} -y 3 -s 1 -d CompArch2 -p lecture7  
+    $FILE -y 3 -s 1 -d CompArch2 -p lecture7  
 
     # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and makes pdf called lecture 7 and opens it
-    ${FILE%.*} -y 3 -s 1 -d CompArch2 -p lecture7 -o
+    $FILE -y 3 -s 1 -d CompArch2 -p lecture7 -o
 
     # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2, lists directory and makes pdf called lecture 7 and opens it
     # Note, listing directory takes precedence over making pdf in all cases whether the -l flag comes after
-    ${FILE%.*} -y 3 -s 1 -d CompArch2 -l -p lecture7 -O lecture7
+    $FILE -y 3 -s 1 -d CompArch2 -l -p lecture7 -O lecture7
 
     # This does goes to \$NOTES_DIR/Year3/Sem1 and lists directory
-    ${FILE%.*} -y 3 -s 1 -l 
+    $FILE -y 3 -s 1 -l 
 
     # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and opens a samples.pdf file that is assumed to exist
-    ${FILE%.*} -y 3 -s 1 -d CompArch2 -O samples
+    $FILE -y 3 -s 1 -d CompArch2 -O mypdf
 EOF
 }
 
@@ -44,8 +50,8 @@ It's main purpose is to compile singular or multiple markdown files to pdf
 This allows for quick note taking and in future note reading 
 
 Usage:
-    ${FILE%.*}  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-p <pdf name> &| -o] [-O <pdf name>]
-    ${FILE%.*}  -h | -v | -l | -e
+    $FILE  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-p <pdf name> &| -o] [-O <pdf name>]
+    $FILE  -h | -v | -l | -e
 
 Options:
     -y enter year of course in NOTES_DIR e.g. -y 3 
@@ -69,9 +75,11 @@ EOF
 # returns String with version information
 version() {
 cat << EOF
-${FILE%.*} $VERSION
+$FILE $VERSION
 
-Written by Alexander Sepelenco
+Written by Alexander Sepelenco A.K.A Silent
+Github: https://github.com/alexandersep
+For bug reports please create an issue in https://github.com/alexandersep/notes.git
 EOF
 }
 
@@ -108,12 +116,12 @@ isNum() {
 # Param $1 - directory :: String 
 # Return void
 enterDirectory() {
-    [[ $(isDirectory "$1") == 1 ]] && cd $2$1 || echo "Error, directory $1 does not exist"
+    [[ $(isDirectory "$1") == 1 ]] && cd $1 || echo "Error, directory $1 does not exist"
 }
 
 # returns void
 main() {
-    [[ -z "$1" ]] && echo -e "Command not found\nTry '${FILE%.*} -h' for more information."    
+    [[ -z "$1" ]] && echo -e "Command not found\nTry '$FILE -h' for more information." && exit 1
     while getopts y:d:s:p:O:olhve flag
     do
         case "${flag}" in
@@ -142,10 +150,10 @@ main() {
     fi
     [[ $d != "" ]] && enterDirectory "$d"
     [[ $l == "list" ]] && ls --color
-    [[ $p != "" ]] && makepdf $p ; [[ $o == "open" ]] && zathura $p.pdf &
-    [[ $O != "" ]] && zathura $O.pdf &
+    [[ $p != "" ]] && makepdf $p ; [[ $o == "open" ]] && $EDITOR $p.pdf &
+    [[ $O != "" ]] && $EDITOR $O.pdf &
     unset y d p s l o O
 }
 
-# envokes main
+# evokes main
 main "$@" # equivalent to main $1 $2 ...
