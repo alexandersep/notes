@@ -12,7 +12,7 @@ EXFILE="${0##*/}"
 FILE="${EXFILE%.*}"
 
 # Name of pdf viewer
-EDITOR="zathura"
+PDFVIEWER="zathura"
 
 # Change this to your wanted directory
 NOTES_DIR="/home/sasha/Documents/Notes/"
@@ -150,8 +150,8 @@ main() {
     fi
     [[ $d != "" ]] && enterDirectory "$d"
     [[ $l == "list" ]] && ls --color
-    [[ $p != "" ]] && makepdf $p ; [[ $o == "open" ]] && $EDITOR $p.pdf &
-    [[ $O != "" ]] && $EDITOR $O.pdf &
+    [[ $p != "" ]] && makepdf $p ; [[ $o == "open" ]] && $PDFVIEWER $p.pdf &
+    [[ $O != "" ]] && $PDFVIEWER $O.pdf &
     unset y d p s l o O
 }
 
