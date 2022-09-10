@@ -121,7 +121,7 @@ enterDirectory() {
 
 # returns void
 main() {
-    [[ -z "$1" ]] && echo -e "Command not found\nTry '$FILE -h' for more information." && exit 1
+    [[ -z "$1" ]] && echo -e "Command not found\nTry '$FILE -h' for more information." ; exit 1
     while getopts y:d:s:p:O:olhve flag
     do
         case "${flag}" in
