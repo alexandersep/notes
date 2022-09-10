@@ -15,7 +15,7 @@ FILE="${EXFILE%.*}"
 PDFVIEWER="zathura"
 
 # Change this to your wanted directory
-NOTES_DIR="/home/sasha/Documents/Notes/"
+NOTES_DIR="~/Documents/Notes/"
 
 # returns String with examples on how to use programme
 examples() {
