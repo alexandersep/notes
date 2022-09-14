@@ -3,7 +3,7 @@
 set -e
 
 # Version number
-VERSION="2.2.5"
+VERSION="3.0.0"
 
 # Name of file currently run with extension
 EXFILE="${0##*/}"
@@ -11,11 +11,14 @@ EXFILE="${0##*/}"
 # Name of file without extension
 FILE="${EXFILE%.*}"
 
+# Name of file editor
+EDITOR="vim"
+
 # Name of pdf viewer
 PDFVIEWER="zathura"
 
 # Change this to your wanted directory
-NOTES_DIR="/home/sasha/Documents/Notes/"
+NOTES_DIR="/home/alex/Documents/Notes/"
 
 # returns String with examples on how to use programme
 examples() {
@@ -50,7 +53,7 @@ It's main purpose is to compile singular or multiple markdown files to pdf
 This allows for quick note taking and in future note reading 
 
 Usage:
-    $FILE  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-p <pdf name> &| -o] [-O <pdf name>]
+    $FILE  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-w] [-r] [-p <pdf name> &| -o] [-O <pdf name>]
     $FILE  -h | -v | -l | -e
 
 Options:
@@ -60,6 +63,8 @@ Options:
     -p name of pdf (without extension .pdf) 
     -o open newely created pdf 
     -O open pdf (without extension .pdf)
+    -w Write a file, if file exists will open file (with extension)
+    -r Remove a file (with extension)
     -h print helptext
     -v print version 
     -l list current directory 
@@ -122,7 +127,7 @@ enterDirectory() {
 # returns void
 main() {
     [[ -z "$1" ]] && echo -e "Command not found\nTry '$FILE -h' for more information." && exit 1
-    while getopts y:d:s:p:O:olhve flag
+    while getopts y:d:s:p:O:w:r:olhve flag
     do
         case "${flag}" in
             y) y=${OPTARG};;
@@ -130,14 +135,17 @@ main() {
             s) s=${OPTARG};;
             p) p=${OPTARG};;
             O) O=${OPTARG};;
-            o) o="open";;
-            l) l="list";;
+            w) w=${OPTARG};;
+            r) r=${OPTARG};;
+            o) o="o";;
+            l) l="l";;
             h) usage ; exit 0;;
             v) version ; exit 0;;
             e) examples ; exit 0;;
         esac
     done
     cd $NOTES_DIR
+    [[ $r != "" ]] && rm $r
     if [[ $(isNum "$y") == 1 ]]; then 
         enterDirectory "Year$y" 
     elif [[ $y != "" ]]; then
@@ -149,10 +157,11 @@ main() {
         echo "Error the $s flag must be specified as a number"
     fi
     [[ $d != "" ]] && enterDirectory "$d"
-    [[ $l == "list" ]] && ls --color
-    [[ $p != "" ]] && makepdf $p ; [[ $o == "open" ]] && $PDFVIEWER $p.pdf &
+    [[ $l == "l" ]] && ls --color
+    [[ $p != "" ]] && makepdf $p ; [[ $o == "o" ]] && $PDFVIEWER $p.pdf &
     [[ $O != "" ]] && $PDFVIEWER $O.pdf &
-    unset y d p s l o O
+    [[ $w != "" ]] && $EDITOR $w
+    unset y d s p l o O w r
 }
 
 # evokes main

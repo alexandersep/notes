@@ -1,5 +1,5 @@
 # notes
-Markdown to LaTeX pdf script convertor using pandoc \
+Markdown to LaTeX pdf script converter using pandoc \
 It's main purpose is to compile singular or multiple markdown files to pdf \
 This allows for quick note taking and in future note reading 
 
@@ -8,7 +8,7 @@ This allows for quick note taking and in future note reading
 2. Consider installing this script into `/usr/local/bin`
 ```
 Usage:
-    notes  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-p <pdf name> &| -o] [-O <pdf name>]
+    notes  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-w] [-r] [-p <pdf name> &| -o] [-O <pdf name>]
     notes  -h | -v | -l | -e
 
 Options:
@@ -18,6 +18,8 @@ Options:
     -p name of pdf (without extension .pdf) 
     -o open newely created pdf
     -O open pdf
+    -w Write a markdown file, if file exists will open file
+    -r Remove a file (with extension)
     -h print helptext
     -v print version 
     -l list current directory 
@@ -28,15 +30,17 @@ Notes:
     All markdown files will be sorted based on "> Date dd-mm-yyyy" which 
     are expected to be somewhere in the file. This will be later used to compile to LaTeX
 ```
-
 ## Dependencies
-* pandoc
-* LaTeX
-* zathura
+* Changeable dependencies 
+    * zathura
+    * vim 
+* Hard Dependencies
+    * pandoc
+    * LaTeX
 
 ### Inspiration
 * I decided to yet again give an attempt to incorporate vim into my note taking workflow
 * I was inspired to create a pandoc script based on this youtube 
 [video](https://www.youtube.com/watch?v=wh_WGWii7UE&t=853s) 
-* This github repository very loosely referenced this github 
+* This GitHub repository very loosely referenced this GitHub 
 [repo](https://github.com/connermcd/notes/blob/master/notes) 
