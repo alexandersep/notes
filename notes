@@ -3,7 +3,7 @@
 set -e
 
 # Version number
-VERSION="3.0.0"
+VERSION="3.0.1"
 
 # Name of file currently run with extension
 EXFILE="${0##*/}"
@@ -18,30 +18,38 @@ EDITOR="vim"
 PDFVIEWER="zathura"
 
 # Change this to your wanted directory
-NOTES_DIR="/home/alex/Documents/Notes/"
+NOTES_DIR="$HOME/Documents/Notes/"
 
 # returns String with examples on how to use programme
 examples() {
 cat << EOF
 Examples:
-    # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and lists directory 
+    # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and lists directory 
     $FILE -y 3 -s 1 -d CompArch2 -l 
 
-    # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and makes pdf called lecture 7 
+    # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and makes pdf called lecture 7 
     $FILE -y 3 -s 1 -d CompArch2 -p lecture7  
 
-    # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and makes pdf called lecture 7 and opens it
+    # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and makes pdf called lecture 7 and opens it
     $FILE -y 3 -s 1 -d CompArch2 -p lecture7 -o
 
-    # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2, lists directory and makes pdf called lecture 7 and opens it
+    # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2, lists directory and makes pdf called lecture 7 and opens it
     # Note, listing directory takes precedence over making pdf in all cases whether the -l flag comes after
     $FILE -y 3 -s 1 -d CompArch2 -l -p lecture7 -O lecture7
 
-    # This does goes to \$NOTES_DIR/Year3/Sem1 and lists directory
+    # This goes to \$NOTES_DIR/Year3/Sem1 and lists directory
     $FILE -y 3 -s 1 -l 
 
-    # This does goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and opens a samples.pdf file that is assumed to exist
+    # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and opens a samples.pdf file that is assumed to exist
     $FILE -y 3 -s 1 -d CompArch2 -O mypdf
+
+    # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and opens a lecture.pdf file that is assumed to exist and begins
+    # editing a file called lecture2.md
+    $FILE -y3 -s1 -dComArch2 -w lecture2.md -p lecture -o
+    
+    # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and deletes the file lecture.md 
+    $FILE -y3 -s1 -dComArch2 -r lecture2.md 
+    
 EOF
 }
 
