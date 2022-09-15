@@ -3,7 +3,7 @@
 set -e
 
 # Version number
-VERSION="4.0.1"
+VERSION="4.0.2"
 
 # Name of file currently run with extension
 EXFILE="${0##*/}"
@@ -110,7 +110,7 @@ getnotes() {
     awk '{print $5}' 
 }
 
-# Param $1 - String
+# Param $1 - potentialDirectory :: String
 # Return Boolean 
 isDirectory() {
     [[ -d "$1" ]] && echo 1 || echo 0

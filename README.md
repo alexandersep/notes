@@ -8,8 +8,10 @@ This allows for quick note taking and in future note reading
 2. Consider installing this script into `/usr/local/bin`
 3. For autocompletion using notes script, 
    Change the NOTES_DIR in `autocomplete.sh` to fit you, then
-   copy the `autocomplete.sh` file into `/etc/bash_completion.sh`
-4. Enter `/etc/bassh_completion.sh` and source it with `source autocompletion.sh`
+   source `autocomplete.sh` file in your `.bashrc`, like so 
+   `source /etc/bash_completion.d/autcomplete.sh` and make sure 
+   to copy the script into `/etc/bash_completion.d/`
+4. Enter `/etc/bash_completion.d` and source it with `source autocompletion.sh`
 ```
 Usage:
     notes  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-w] [-r] [-p <pdf name> &| -o] [-O <pdf name>]
