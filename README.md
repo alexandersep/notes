@@ -6,14 +6,21 @@ This allows for quick note taking and in future note reading
 ## Usage
 1. Give yourself executing permission via `chmod +x notes`
 2. Consider installing this script into `/usr/local/bin`
+3. For autocompletion using notes script, 
+   Change the NOTES_DIR in `autocomplete.sh` to fit you, then
+   source `autocomplete.sh` file in your `.bashrc`, like so 
+   `source /etc/bash_completion.d/autcomplete.sh` and make sure 
+   to copy the script into `/etc/bash_completion.d/`
+4. Enter `/etc/bash_completion.d` and source it with `source autocompletion.sh`
+   Now autocompletion should function as expected
 ```
 Usage:
     notes  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-w] [-r] [-p <pdf name> &| -o] [-O <pdf name>]
     notes  -h | -v | -l | -e
 
 Options:
-    -y enter year of course in NOTES_DIR e.g. -y 3 
-    -s enter semester of course, may only be 1 or 2 if out of range, flag ignored 
+    -y enter year of course e.g. Year3 
+    -s enter semester of course e.g. Sem1
     -d use directory within NOTES_DIR or absoulte directory to compile pdf
     -p name of pdf (without extension .pdf) 
     -o open newely created pdf
