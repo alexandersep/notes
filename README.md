@@ -12,6 +12,7 @@ This allows for quick note taking and in future note reading
    `source /etc/bash_completion.d/autcomplete.sh` and make sure 
    to copy the script into `/etc/bash_completion.d/`
 4. Enter `/etc/bash_completion.d` and source it with `source autocompletion.sh`
+   Now autocompletion should function as expected
 ```
 Usage:
     notes  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-w] [-r] [-p <pdf name> &| -o] [-O <pdf name>]
