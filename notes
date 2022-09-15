@@ -25,31 +25,33 @@ examples() {
 cat << EOF
 Examples:
     # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and lists directory 
-    $FILE -y 3 -s 1 -d CompArch2 -l 
+    $FILE -y Year3 -s Sem1 -d CompArch2 -l 
 
     # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and makes pdf called lecture 7 
-    $FILE -y 3 -s 1 -d CompArch2 -p lecture7  
+    $FILE -y Year3 -s Sem1 -d CompArch2 -p lecture7  
 
     # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and makes pdf called lecture 7 and opens it
-    $FILE -y 3 -s 1 -d CompArch2 -p lecture7 -o
+    $FILE -y Year3 -s Sem1 -d CompArch2 -p lecture7 -o
 
     # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2, lists directory and makes pdf called lecture 7 and opens it
     # Note, listing directory takes precedence over making pdf in all cases whether the -l flag comes after
-    $FILE -y 3 -s 1 -d CompArch2 -l -p lecture7 -O lecture7
+    $FILE -y Year3 -s Sem1 -d CompArch2 -l -p lecture7 -O lecture7
 
     # This goes to \$NOTES_DIR/Year3/Sem1 and lists directory
-    $FILE -y 3 -s 1 -l 
+    $FILE -y Year3 -s Sem1 -l 
 
     # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and opens a samples.pdf file that is assumed to exist
-    $FILE -y 3 -s 1 -d CompArch2 -O mypdf
+    $FILE -y Year3 -s Sem1 -d CompArch2 -O mypdf
 
     # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and opens a lecture.pdf file that is assumed to exist and begins
     # editing a file called lecture2.md
-    $FILE -y3 -s1 -dComArch2 -w lecture2.md -p lecture -o
+    $FILE -yYear3 -sSem1 -dComArch2 -w lecture2.md -p lecture -o
     
     # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and deletes the file lecture.md 
-    $FILE -y3 -s1 -dComArch2 -r lecture2.md 
-    
+    $FILE -yYear3 -sSem1 -dComArch2 -r lecture2.md 
+
+    # It contains auto-completion 
+    $FILE -y <tab><tab> 
 EOF
 }
 
@@ -58,19 +60,19 @@ usage() {
 cat << EOF
 Markdown to LaTeX pdf script convertor using pandoc
 It's main purpose is to compile singular or multiple markdown files to pdf
-This allows for quick note taking and in future note reading 
+This allows for quick note taking and in future note reading
 
 Usage:
     $FILE  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-w] [-r] [-p <pdf name> &| -o] [-O <pdf name>]
     $FILE  -h | -v | -l | -e
 
 Options:
-    -y enter year of course in NOTES_DIR e.g. -y 3 
-    -s enter semester of course, may only be 1 or 2 if out of range, flag ignored 
+    -y enter year of course e.g. Year3
+    -s enter semester of course e.g. Sem1
     -d use directory within NOTES_DIR or absoulte directory to compile pdf
     -p name of pdf (without extension .pdf) 
     -o open newely created pdf 
-    -O open pdf (without extension .pdf)
+    -O open pdf (with extension)
     -w Write a file, if file exists will open file (with extension)
     -r Remove a file (with extension)
     -h print helptext
@@ -112,18 +114,9 @@ getnotes() {
 }
 
 # Param $1 - String
-# Return boolean 
+# Return Boolean 
 isDirectory() {
     [[ -d "$1" ]] && echo 1 || echo 0
-}
-
-# Parm $1 - num :: String 
-# Enter Document
-# Return boolean 
-isNum() {
-    regNum="^[0-9]+$" # regular expression Number
-    [[ $1 =~ $regNum ]] && echo 1 || echo 0
-    unset regNum
 }
 
 # Param $1 - directory :: String 
@@ -154,20 +147,12 @@ main() {
     done
     cd $NOTES_DIR
     [[ $r != "" ]] && rm $r
-    if [[ $(isNum "$y") == 1 ]]; then 
-        enterDirectory "Year$y" 
-    elif [[ $y != "" ]]; then
-        echo "Error the $y flag must be specified as a number"
-    fi
-    if [[ $(isNum "$s") == 1 ]]; then 
-        enterDirectory "Sem$s" 
-    elif [[ $s != "" ]]; then 
-        echo "Error the $s flag must be specified as a number"
-    fi
+    [[ $y != "" ]] && enterDirectory $y
+    [[ $s != "" ]] && enterDirectory "$s" 
     [[ $d != "" ]] && enterDirectory "$d"
-    [[ $l == "l" ]] && ls --color
-    [[ $p != "" ]] && makepdf $p ; [[ $o == "o" ]] && $PDFVIEWER $p.pdf &
-    [[ $O != "" ]] && $PDFVIEWER $O.pdf &
+    [[ $l == "l" ]] && ls 
+    [[ $p != "" ]] && makepdf $p && [[ $o == "o" ]] && $PDFVIEWER $p.pdf &
+    [[ $O != "" ]] && $PDFVIEWER $O &
     [[ $w != "" ]] && $EDITOR $w
     unset y d s p l o O w r
 }
