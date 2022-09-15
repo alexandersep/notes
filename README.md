@@ -6,7 +6,8 @@ This allows for quick note taking and in future note reading
 ## Usage
 1. Give yourself executing permission via `chmod +x notes`
 2. Consider installing this script into `/usr/local/bin`
-3. For autocompletion using notes script, Change the NOTES_DIR to fit you, then
+3. For autocompletion using notes script, 
+   Change the NOTES_DIR in `autocomplete.sh` to fit you, then
    copy the `autocomplete.sh` file into `/etc/bash_completion.sh`
 4. Enter `/etc/bassh_completion.sh` and source it with `source autocompletion.sh`
 ```

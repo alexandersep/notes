@@ -3,7 +3,7 @@
 set -e
 
 # Version number
-VERSION="3.0.1"
+VERSION="4.0.1"
 
 # Name of file currently run with extension
 EXFILE="${0##*/}"
@@ -49,9 +49,6 @@ Examples:
     
     # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and deletes the file lecture.md 
     $FILE -yYear3 -sSem1 -dComArch2 -r lecture2.md 
-
-    # It contains auto-completion 
-    $FILE -y <tab><tab> 
 EOF
 }
 
