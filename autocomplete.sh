@@ -1,4 +1,4 @@
-NOTES_DIR="/home/sasha/Documents/Notes/"
+NOTES_DIR="$HOME/Documents/Notes/"
 _notes()
 {
   local cur prev opts

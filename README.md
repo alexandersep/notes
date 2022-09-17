@@ -6,13 +6,14 @@ This allows for quick note taking and in future note reading
 ## Usage
 1. Give yourself executing permission via `chmod +x notes`
 2. Consider installing this script into `/usr/local/bin`
-3. For autocompletion using notes script, 
-   Change the NOTES_DIR in `autocomplete.sh` to fit you, then
-   source `autocomplete.sh` file in your `.bashrc`, like so 
-   `source /etc/bash_completion.d/autcomplete.sh` and make sure 
-   to copy the script into `/etc/bash_completion.d/`
-4. Enter `/etc/bash_completion.d` and source it with `source autocompletion.sh`
-   Now autocompletion should function as expected
+3. Autocompletion functionality (Optional and WIP) 
+    1. For autocompletion using notes script, 
+       Change the NOTES_DIR in `autocomplete.sh` to fit you, then
+       source `autocomplete.sh` file in your `.bashrc`, like so 
+       `source /etc/bash_completion.d/autcomplete.sh` and make sure 
+       to copy the script into `/etc/bash_completion.d/`
+    2. Enter `/etc/bash_completion.d` and source it with `source autocompletion.sh`
+       Now autocompletion should function as expected
 ```
 Usage:
     notes  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-w] [-r] [-p <pdf name> &| -o] [-O <pdf name>]
@@ -34,8 +35,8 @@ Options:
     
 Notes:
     Make sure to change the NOTES_DIR variable to suit your directory
-    All markdown files will be sorted based on "> Date dd-mm-yyyy" which 
-    are expected to be somewhere in the file. This will be later used to compile to LaTeX
+    All markdown files will be sorted based on "> Date: dd-mm-yyyy \" which 
+    is expected to be somewhere in the file. This will be later used to compile to LaTeX
 ```
 ## Dependencies
 * Changeable dependencies 

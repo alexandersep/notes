@@ -3,7 +3,7 @@
 set -e
 
 # Version number
-VERSION="4.0.2"
+VERSION="4.0.3"
 
 # Name of file currently run with extension
 EXFILE="${0##*/}"
@@ -79,8 +79,8 @@ Options:
 
 Notes:
     Make sure to change the NOTES_DIR variable to suit your directory
-    All markdown files will be sorted based on "> Date dd-mm-yyyy" which 
-    are expected to be somewhere in the file. This will be later used to compile to LaTeX
+    All markdown files will be sorted based on "> Date: dd-mm-yyyy \" which 
+    is expected to be somewhere in the file. This will be later used to compile to LaTeX
 EOF
 }
 
@@ -91,7 +91,7 @@ $FILE $VERSION
 
 Written by Alexander Sepelenco A.K.A Silent
 Github: https://github.com/alexandersep
-For bug reports please create an issue in https://github.com/alexandersep/notes.git
+For bug reports please create an issue at https://github.com/alexandersep/notes.git
 EOF
 }
 
