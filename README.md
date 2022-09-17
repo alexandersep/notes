@@ -36,7 +36,9 @@ Options:
 Notes:
     Make sure to change the NOTES_DIR variable to suit your directory
     All markdown files will be sorted based on "> Date: dd-mm-yyyy \" which 
-    is expected to be somewhere in the file. This will be later used to compile to LaTeX
+    is expected to be somewhere in the file. This will be later used to compile to LaTeX.
+    If the date is not present, then the file will not be sorted. It will be compiled
+    to LaTeX and showed up after the sorted markdown files on the pdf.
 ```
 ## Dependencies
 * Changeable dependencies 
