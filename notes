@@ -100,14 +100,23 @@ makepdf() {
     pandoc -s -f markdown -t latex --toc $(getnotes) -o $1.pdf
 }
 
-# returns a String files, space separated
-# Ordered with "> Date: dd-mm-yyyy" found inside the files
+# returns a String files, separated by line 
 getnotes() {
+    # Ordered with "> Date: dd-mm-yyyy \" found inside the files
     for file in *.md; do
-        echo "`grep "> Date: [0-3][0-9]-[0-1][0-9]-[0-9][0-9][0-9][0-9]" $file` $file"
+        command=`grep "> Date: [0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9]" $file`
+        echo "$command $file"
     done | \
     sort -n -t "-" -k3 -k2 -k1 | \
-    awk '{print $5}' 
+    awk '{print $5}'
+
+    # Is not ordered, Since the date was not specified correctly 
+    # All unordered files will show up after ordered files in the latex pdf 
+    for file in *.md; do
+        command=`grep -L "> Date: [0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9]" $file`
+        [[ -z $command ]] || echo "$file"
+    done 
+    unset command
 }
 
 # Param $1 - potentialDirectory :: String
