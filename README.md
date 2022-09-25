@@ -12,6 +12,8 @@ This allows for quick note taking and in future note reading
        Give the location of this github repo, in my case I put `source ~/Documents/gits/notes/autocomplete.sh`, 
        save and exit the `~/.bashrc` file
     2. Source your `~/.bashrc` file using `source ~/.bashrc` 
+    3. Autcompletion for -w, -r, -p, -O flags only work when you are inside your year/sem/directory folders
+    4. Autcompletion relies on user to type commands in, if pasting a command, then autocompletion will not work
 ```
 Usage:
     notes  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-w] [-r] [-p <pdf name> &| -o] [-O <pdf name>]
