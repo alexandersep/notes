@@ -6,10 +6,11 @@ This allows for quick note taking and in future note reading
 ## Usage
 1. Give yourself executing permission via `chmod +x notes`
 2. Consider installing this script into `/usr/local/bin`
-3. Autocompletion functionality (Optional and WIP) 
+3. Autocompletion functionality (Optional) 
     1. Change the NOTES\_DIR in `autocomplete.sh` to fit you, then
-       edit your `~/.bashrc` file and add `source autocomplete.sh` and 
-       exit your `~/.bashrc` file
+       edit your `~/.bashrc` file and add source your autocomplete script
+       Give the location of this github repo, in my case I put `source ~/Documents/gits/notes/autocomplete.sh`, 
+       save and exit the `~/.bashrc` file
     2. Source your `~/.bashrc` file using `source ~/.bashrc` 
 ```
 Usage:
@@ -20,7 +21,7 @@ Options:
     -y enter year of course e.g. Year3 
     -s enter semester of course e.g. Sem1
     -d use directory within NOTES_DIR or absoulte directory to compile pdf
-    -p name of pdf (without extension .pdf) 
+    -p name of pdf (with extension) 
     -o open newely created pdf
     -O open pdf
     -w Write a markdown file, if file exists will open file

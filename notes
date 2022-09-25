@@ -3,7 +3,7 @@
 set -e
 
 # Version number
-VERSION="4.0.4"
+VERSION="4.1.0"
 
 # Name of file currently run with extension
 EXFILE="${0##*/}"
@@ -28,24 +28,24 @@ Examples:
     $FILE -y Year3 -s Sem1 -d CompArch2 -l 
 
     # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and makes pdf called lecture 7 
-    $FILE -y Year3 -s Sem1 -d CompArch2 -p lecture7  
+    $FILE -y Year3 -s Sem1 -d CompArch2 -p lecture7.pdf
 
     # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and makes pdf called lecture 7 and opens it
-    $FILE -y Year3 -s Sem1 -d CompArch2 -p lecture7 -o
+    $FILE -y Year3 -s Sem1 -d CompArch2 -p lecture7.pdf -o
 
     # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2, lists directory and makes pdf called lecture 7 and opens it
     # Note, listing directory takes precedence over making pdf in all cases whether the -l flag comes after
-    $FILE -y Year3 -s Sem1 -d CompArch2 -l -p lecture7 -O lecture7
+    $FILE -y Year3 -s Sem1 -d CompArch2 -l -p lecture7.pdf -O lecture7.pdf
 
     # This goes to \$NOTES_DIR/Year3/Sem1 and lists directory
     $FILE -y Year3 -s Sem1 -l 
 
     # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and opens a samples.pdf file that is assumed to exist
-    $FILE -y Year3 -s Sem1 -d CompArch2 -O mypdf
+    $FILE -y Year3 -s Sem1 -d CompArch2 -O mypdf.pdf
 
     # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and opens a lecture.pdf file that is assumed to exist and begins
     # editing a file called lecture2.md
-    $FILE -yYear3 -sSem1 -dComArch2 -w lecture2.md -p lecture -o
+    $FILE -yYear3 -sSem1 -dComArch2 -w lecture2.md -p lecture.pdf -o
     
     # This goes to \$NOTES_DIR/Year3/Sem1/CompArch2 and deletes the file lecture.md 
     $FILE -yYear3 -sSem1 -dComArch2 -r lecture2.md 
@@ -67,7 +67,7 @@ Options:
     -y enter year of course e.g. Year3
     -s enter semester of course e.g. Sem1
     -d use directory within NOTES_DIR or absoulte directory to compile pdf
-    -p name of pdf (without extension .pdf) 
+    -p name of pdf (with extension) 
     -o open newely created pdf 
     -O open pdf (with extension)
     -w Write a file, if file exists will open file (with extension)
@@ -157,7 +157,7 @@ main() {
     [[ $s != "" ]] && enterDirectory "$s" 
     [[ $d != "" ]] && enterDirectory "$d"
     [[ $l == "l" ]] && ls 
-    [[ $p != "" ]] && makepdf $p && [[ $o == "o" ]] && $PDFVIEWER $p.pdf &
+    [[ $p != "" ]] && makepdf $p && [[ $o == "o" ]] && $PDFVIEWER $p &
     [[ $O != "" ]] && $PDFVIEWER $O &
     [[ $w != "" ]] && $EDITOR $w
     unset y d s p l o O w r
