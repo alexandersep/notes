@@ -7,7 +7,7 @@ _notes()
     prev="${COMP_WORDS[COMP_CWORD-1]}"
     opts="-y -s -d -O -w -r -p"
 
-    WriteFile="ls *.md"
+    WriteFile="ls *.md 2> /dev/null"
     OpenPdf="ls *.pdf 2> /dev/null | awk -F '/' '{print $NF}' | tr '\n' ' '"
 
     case "$prev" in
