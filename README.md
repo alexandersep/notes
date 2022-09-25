@@ -7,13 +7,10 @@ This allows for quick note taking and in future note reading
 1. Give yourself executing permission via `chmod +x notes`
 2. Consider installing this script into `/usr/local/bin`
 3. Autocompletion functionality (Optional and WIP) 
-    1. For autocompletion using notes script, 
-       Change the NOTES_DIR in `autocomplete.sh` to fit you, then
-       source `autocomplete.sh` file in your `.bashrc`, like so 
-       `source /etc/bash_completion.d/autcomplete.sh` and make sure 
-       to copy the script into `/etc/bash_completion.d/`
-    2. Enter `/etc/bash_completion.d` and source it with `source autocompletion.sh`
-       Now autocompletion should function as expected
+    1. Change the NOTES\_DIR in `autocomplete.sh` to fit you, then
+       edit your `~/.bashrc` file and add `source autocomplete.sh` and 
+       exit your `~/.bashrc` file
+    2. Source your `~/.bashrc` file using `source ~/.bashrc` 
 ```
 Usage:
     notes  [-y <year>] [-s <semester>] [-d <directory>] [-l] [-w] [-r] [-p <pdf name> &| -o] [-O <pdf name>]
