@@ -3,7 +3,7 @@
 set -e
 
 # Version number
-VERSION="4.0.3"
+VERSION="4.0.4"
 
 # Name of file currently run with extension
 EXFILE="${0##*/}"
